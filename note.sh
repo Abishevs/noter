@@ -2,7 +2,7 @@
 ############################################################
 # Help                                                     #
 ############################################################
-VERSION=0.1.0
+VERSION=0.1.2
 Help()
 {
    # Display Help
@@ -25,9 +25,8 @@ Help()
 # ###################
 NAME="Webmaster"
 
-GDRIVE=~/myGoogleDrive
-OBSIDIAN=$GDRIVE/Obsidian
-OPEN_EDITOR=lvim #choose your editor of choice like vim,nvim,lvim, nano etc
+OBSIDIAN=~/Desktop/obsidian
+OPEN_EDITOR=nvim #choose your editor of choice like vim,nvim,lvim, nano etc
 TEMPLATES=$OBSIDIAN/templates
 YEAR=`date +%Y`
 MONTH=`date +%B`
@@ -53,14 +52,7 @@ check_if_exists()
   fi
 }
 
-# Connect to google drive 
-# 
-if [ ! -d $OBSIDIAN ]; then
- google-drive-ocamlfuse $GDRIVE
- echo "Good morning $NAME!"
- echo "Connecting to Google drive..."
-fi
-
+echo "Good morning $NAME!"
 check_if_exists #Cheks for folders for notes, makes them if needed.
 
 DailyNote()
@@ -73,6 +65,7 @@ DailyNote()
   if [ -f "$NOTE" ]; then # if exists open note
     $OPEN_EDITOR $NOTE 
   else
+    echo "Good morning $NAME!"
     echo -e "Created at: $TIME Updated at: \n ## Morning Thoughts \n\n ## Tasks \n - [ ] \n - [ ] \n ## Reflection \n\n ## Plan for tomorrow \n *  \n *  \n ## Night Thoughts \n\n " > $NOTE
     echo "Creating from template..."
     $OPEN_EDITOR $NOTE #open note
@@ -131,7 +124,7 @@ while getopts ":hdwrqeot" option; do
         ${OPEN_EDITOR} ${WNOTES}
         exit;;
       e) # Edit noter
-        ${OPEN_EDITOR} /home/frap/scripts/note.sh
+        ${OPEN_EDITOR} ~/Desktop/noter/note.sh
         exit;;
       \?) # Invalid option
        echo "Error: Invalid option"
@@ -140,4 +133,3 @@ while getopts ":hdwrqeot" option; do
    esac
 done
 
-echo "Good morning $NAME!"
