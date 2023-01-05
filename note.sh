@@ -2,7 +2,7 @@
 ############################################################
 # Help                                                     #
 ############################################################
-VERSION=0.1.2
+VERSION=0.1.3
 Help()
 {
    # Display Help
@@ -37,6 +37,7 @@ WNOTES=$MNOTES/week-$WEEK
 YNOTES=$PERSONAL_NOTES/$YEAR
 RNOTES=$OBSIDIAN/Quick_notes
 WEEKLY=$YNOTES/weekly
+
 check_if_exists()
 {
 
@@ -52,7 +53,6 @@ check_if_exists()
   fi
 }
 
-echo "Good morning $NAME!"
 check_if_exists #Cheks for folders for notes, makes them if needed.
 
 DailyNote()
@@ -91,7 +91,20 @@ WeeklyNote()
     echo -e "Created at: $TIME Updated at: \n ## This weeks thoughts \n\n ## Weekly Tasks \n - [ ] \n - [ ] \n ## Reflection over the week \n\n ## Plans for next week \n *  \n *  \n" > $NOTE
     echo "Creating from template..."
     $OPEN_EDITOR $NOTE #open note
-    echo "Created $NOTE at: "
+    echo "Created $NOTE at: `date`"
+  fi
+}
+
+YearlyNote()
+{
+  NOTE_NAME=$YEAR.md 
+  NOTE=$PERSONAL_NOTES/yearly/$NOTE_NAME
+  if [ -f "$NOTE" ]; then
+    $OPEN_EDITOR $NOTE
+  else
+    echo "## Yearly goddnes" > $NOTE
+    $OPEN_EDITOR $NOTE
+    echo "Created $NOTE at: `date`"
   fi
 }
 ############################################################
@@ -102,7 +115,8 @@ WeeklyNote()
 # Process the input options. Add options as needed.        #
 ############################################################
 # Get the options
-while getopts ":hdwrqeot" option; do
+
+while getopts ":hdwrqeoty" option; do
    case $option in
       h) # display Help
         Help
@@ -121,10 +135,15 @@ while getopts ":hdwrqeot" option; do
         ${OPEN_EDITOR} ${OBSIDIAN}/Tech_notes/${TECH_NOTE_NAME}.md
         exit;;
       o) # open week notes folder
+        cd $WNOTES
         ${OPEN_EDITOR} ${WNOTES}
         exit;;
       e) # Edit noter
         ${OPEN_EDITOR} ~/Desktop/noter/note.sh
+        exit;;
+      y) # yearly note
+        cd ${PERSONAL_NOTES}/yearly/
+        YearlyNote
         exit;;
       \?) # Invalid option
        echo "Error: Invalid option"
