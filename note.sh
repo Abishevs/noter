@@ -29,7 +29,7 @@ OBSIDIAN=~/Desktop/obsidian
 OPEN_EDITOR=nvim #choose your editor of choice like vim,nvim,lvim, nano etc
 TEMPLATES=$OBSIDIAN/templates
 YEAR=`date +%Y`
-MONTH=`date +%B`
+MONTH=`LC_ALL=en_EN.utf8 date +%B`
 WEEK=`date +%V`
 PERSONAL_NOTES=$OBSIDIAN/Personal_logs
 MNOTES=$PERSONAL_NOTES/${YEAR}/$MONTH
